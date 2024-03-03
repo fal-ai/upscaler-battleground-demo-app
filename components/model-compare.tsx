@@ -1,4 +1,4 @@
-import { formatTime } from "@/lib/utils";
+import { cn, formatTime } from "@/lib/utils";
 import Image from "next/image";
 import {
   ReactCompareSlider,
@@ -64,26 +64,27 @@ const ModelCompare = ({
               onPositionChange={(position) => setPosition(position)}
               itemOne={
                 <>
-                  <CompareImageLabel modelData={modelOne} name="CCSR" />
                   <ReactCompareSliderImage
+                    className={cn(!modelOne && "blur-md")}
                     src={(modelOne?.image || originalImage) as string}
                     srcSet={(modelOne?.image || originalImage) as string}
                     alt="Image one"
                   />
+                  <CompareImageLabel modelData={modelOne} name="CCSR" />
                 </>
               }
               itemTwo={
                 <>
+                  <ReactCompareSliderImage
+                    className={cn(!modelTwo && "blur-md")}
+                    src={(modelTwo?.image || originalImage) as string}
+                    srcSet={(modelTwo?.image || originalImage) as string}
+                    alt="Image one"
+                  />
                   <CompareImageLabel
                     modelData={modelTwo}
                     name="SUPIR"
                     position="right"
-                  />
-
-                  <ReactCompareSliderImage
-                    src={(modelTwo?.image || originalImage) as string}
-                    srcSet={(modelTwo?.image || originalImage) as string}
-                    alt="Image one"
                   />
                 </>
               }

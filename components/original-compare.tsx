@@ -4,6 +4,7 @@ import {
   ReactCompareSliderImage,
 } from "react-compare-slider";
 import CompareImageLabel from "./compare-image-label";
+import { cn } from "@/lib/utils";
 
 interface OriginalCompareProps {
   originalImage: string | null;
@@ -46,34 +47,32 @@ const OriginalCompare = ({
               onPositionChange={(position) => setPosition(position)}
               itemOne={
                 <>
-                  <div className="absolute top-[50%] left-4 text-black dark:text-white bg-white/40 dark:bg-black/50 text-xs py-1 rounded-full px-2">
-                    Original
-                  </div>
                   <ReactCompareSliderImage
                     src={originalImage as string}
                     srcSet={originalImage as string}
                     alt="Image one"
                   />
+                  <div className="absolute top-[50%] left-4 text-black dark:text-white bg-white/40 dark:bg-black/50 text-xs py-1 rounded-full px-2">
+                    Original
+                  </div>
                 </>
               }
               itemTwo={
                 <>
+                  <ReactCompareSliderImage
+                    className={cn(!modelOne && "blur-md")}
+                    src={(modelOne?.image || originalImage) as string}
+                    srcSet={(modelOne?.image || originalImage) as string}
+                    alt="Image one"
+                  />
                   <CompareImageLabel
                     modelData={modelOne}
                     name="CCSR"
                     position="right"
                   />
-                  <ReactCompareSliderImage
-                    src={modelOne?.image as string}
-                    srcSet={modelOne?.image as string}
-                    alt="Image one"
-                  />
                 </>
               }
             />
-            {/* {image && (
-              <img id="imageDisplay" src={image} alt="Dynamic Image" />
-            )} */}
           </div>
         ) : (
           <div className="w-full bg-neutral-200 dark:bg-neutral-900 h-96 md:h-[512px] flex items-center justify-center">
@@ -126,8 +125,9 @@ const OriginalCompare = ({
               itemTwo={
                 <>
                   <ReactCompareSliderImage
-                    src={modelTwo?.image as string}
-                    srcSet={modelTwo?.image as string}
+                    className={cn(!modelTwo && "blur-md")}
+                    src={(modelTwo?.image || originalImage) as string}
+                    srcSet={(modelTwo?.image || originalImage) as string}
                     alt="Image one"
                   />
                   <CompareImageLabel

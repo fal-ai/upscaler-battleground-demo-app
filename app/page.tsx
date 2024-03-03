@@ -41,10 +41,6 @@ export default function Lightning() {
       },
       logs: true,
       onQueueUpdate: (update) => {
-        if (update.status === "IN_PROGRESS" && update.logs) {
-          // update.logs.map((log) => log.message).forEach(console.log);
-          console.log(update.logs.slice(-1)[0]?.message);
-        }
         if (update.status === "COMPLETED") {
           inferenceTime = update.metrics.inference_time as number;
         }
