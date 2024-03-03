@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn, formatTime } from "@/lib/utils";
 import Image from "next/image";
 import {
   ReactCompareSlider,
@@ -64,7 +64,7 @@ const ModelCompare = ({
                         }
                       >
                         {modelOne
-                          ? `${(modelOne.inferenceTime * 1000).toFixed(0)}ms`
+                          ? formatTime(modelOne.inferenceTime * 1000)
                           : `n/a`}
                       </span>
                     )}
@@ -86,7 +86,7 @@ const ModelCompare = ({
                         }
                       >
                         {modelTwo
-                          ? `${(modelTwo.inferenceTime * 1000).toFixed(0)}ms`
+                          ? formatTime(modelTwo.inferenceTime * 1000)
                           : `n/a`}
                       </span>
                     )}

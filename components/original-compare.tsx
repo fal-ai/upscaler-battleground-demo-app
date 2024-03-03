@@ -1,3 +1,5 @@
+import { formatTime } from "@/lib/utils";
+import { LoaderIcon } from "lucide-react";
 import Image from "next/image";
 import {
   ReactCompareSlider,
@@ -49,18 +51,20 @@ const OriginalCompare = ({
               }
               itemTwo={
                 <>
-                  <div className="absolute space-x-2 top-[50%] right-4 bg-black/50 text-xs py-1 rounded-full px-2">
+                  <div className="absolute flex items-center space-x-2 top-[50%] right-4 bg-black/50 text-xs py-1 rounded-full px-2">
                     <span>CCSR</span>
-                    {modelOne && (
+                    {modelOne ? (
                       <span
                         className={
                           !modelOne ? "text-neutral-500" : "text-green-400"
                         }
                       >
                         {modelOne
-                          ? `${(modelOne.inferenceTime * 1000).toFixed(0)}ms`
+                          ? formatTime(modelOne.inferenceTime * 1000)
                           : `n/a`}
                       </span>
+                    ) : (
+                      <LoaderIcon className="animate-spin w-4 h-4 text-green-400" />
                     )}
                   </div>
                   <ReactCompareSliderImage
@@ -130,18 +134,20 @@ const OriginalCompare = ({
                     srcSet={modelTwo?.image as string}
                     alt="Image one"
                   />
-                  <div className="absolute space-x-2 top-[50%] right-4 bg-black/50 text-xs py-1 rounded-full px-2">
+                  <div className="absolute flex items-center space-x-2 top-[50%] right-4 bg-black/50 text-xs py-1 rounded-full px-2">
                     <span>SUPIR</span>
-                    {modelTwo && (
+                    {modelTwo ? (
                       <span
                         className={
                           !modelTwo ? "text-neutral-500" : "text-green-400"
                         }
                       >
                         {modelTwo
-                          ? `${(modelTwo.inferenceTime * 1000).toFixed(0)}ms`
+                          ? formatTime(modelTwo.inferenceTime * 1000)
                           : `n/a`}
                       </span>
+                    ) : (
+                      <LoaderIcon className="animate-spin w-4 h-4 text-green-400" />
                     )}
                   </div>
                 </>

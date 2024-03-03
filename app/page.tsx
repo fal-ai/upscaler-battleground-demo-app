@@ -101,8 +101,8 @@ export default function Lightning() {
     setModelOne(null);
     setModelTwo(null);
 
-    upscaleWithModelOne(file);
     upscaleWithModelTwo(file);
+    upscaleWithModelOne(file);
   };
 
   useEffect(() => {
@@ -114,7 +114,7 @@ export default function Lightning() {
   return (
     <main>
       <div className="flex flex-col justify-between h-[calc(100vh-56px)]">
-        <div className="py-4 md:py-10 px-0 space-y-4 lg:space-y-8 mx-auto w-full max-w-5xl">
+        <div className="py-4 md:pb-10 px-0 space-y-4 lg:space-y-8 mx-auto w-full max-w-5xl">
           <div className="container px-3 md:px-0 flex flex-col mt-10">
             <div className="flex flex-row items-center justify-center space-x-3">
               <div className="w-80 flex flex-col justify-center items-center space-y-2">
