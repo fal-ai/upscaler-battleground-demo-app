@@ -7,7 +7,7 @@ import {
 import CompareImageLabel from "./compare-image-label";
 
 interface ModelCompareProps {
-  originalImage: string;
+  originalImage: string | null;
   position: number;
   setPosition: (position: number) => void;
   modelOne: any;
