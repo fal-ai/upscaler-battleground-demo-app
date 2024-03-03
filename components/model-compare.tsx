@@ -1,9 +1,18 @@
-import { cn, formatTime } from "@/lib/utils";
+import { formatTime } from "@/lib/utils";
 import Image from "next/image";
 import {
   ReactCompareSlider,
   ReactCompareSliderImage,
 } from "react-compare-slider";
+import CompareImageLabel from "./compare-image-label";
+
+interface ModelCompareProps {
+  originalImage: string;
+  position: number;
+  setPosition: (position: number) => void;
+  modelOne: any;
+  modelTwo: any;
+}
 
 const ModelCompare = ({
   originalImage,
@@ -11,7 +20,7 @@ const ModelCompare = ({
   setPosition,
   modelOne,
   modelTwo,
-}) => {
+}: ModelCompareProps) => {
   return (
     <div className="container flex flex-col space-y-6 lg:flex-row lg:space-y-0 p-3 md:px-0 pt-7 space-x-6">
       <div className="flex-1 flex-col flex w-full items-center justify-center">
@@ -55,20 +64,7 @@ const ModelCompare = ({
               onPositionChange={(position) => setPosition(position)}
               itemOne={
                 <>
-                  <div className="absolute space-x-2 top-[50%] left-4 bg-black/50 text-xs py-1 rounded-full px-2">
-                    <span>CCSR</span>
-                    {modelOne && (
-                      <span
-                        className={
-                          !modelOne ? "text-neutral-500" : "text-green-400"
-                        }
-                      >
-                        {modelOne
-                          ? formatTime(modelOne.inferenceTime * 1000)
-                          : `n/a`}
-                      </span>
-                    )}
-                  </div>
+                  <CompareImageLabel modelData={modelOne} name="CCSR" />
                   <ReactCompareSliderImage
                     src={(modelOne?.image || originalImage) as string}
                     srcSet={(modelOne?.image || originalImage) as string}
@@ -78,20 +74,12 @@ const ModelCompare = ({
               }
               itemTwo={
                 <>
-                  <div className="absolute space-x-2 top-[50%] right-4 bg-black/50 text-xs py-1 rounded-full px-2">
-                    {modelTwo && (
-                      <span
-                        className={
-                          !modelTwo ? "text-neutral-500" : "text-green-400"
-                        }
-                      >
-                        {modelTwo
-                          ? formatTime(modelTwo.inferenceTime * 1000)
-                          : `n/a`}
-                      </span>
-                    )}
-                    <span>SUPIR</span>
-                  </div>
+                  <CompareImageLabel
+                    modelData={modelTwo}
+                    name="SUPIR"
+                    position="right"
+                  />
+
                   <ReactCompareSliderImage
                     src={(modelTwo?.image || originalImage) as string}
                     srcSet={(modelTwo?.image || originalImage) as string}

@@ -1,10 +1,17 @@
-import { formatTime } from "@/lib/utils";
-import { LoaderIcon } from "lucide-react";
 import Image from "next/image";
 import {
   ReactCompareSlider,
   ReactCompareSliderImage,
 } from "react-compare-slider";
+import CompareImageLabel from "./compare-image-label";
+
+interface OriginalCompareProps {
+  originalImage: string;
+  position: number;
+  setPosition: (position: number) => void;
+  modelOne: any;
+  modelTwo: any;
+}
 
 const OriginalCompare = ({
   originalImage,
@@ -12,7 +19,7 @@ const OriginalCompare = ({
   setPosition,
   modelOne,
   modelTwo,
-}) => {
+}: OriginalCompareProps) => {
   return (
     <div className="container flex flex-col space-y-6 lg:flex-row lg:space-y-0 p-3 md:px-0 pt-7 lg:space-x-6">
       <div className="flex-1">
@@ -25,7 +32,7 @@ const OriginalCompare = ({
           />
           <a
             href="https://fal.ai/models/ccsr"
-            className="text-indigo-400 font-medium text-sm"
+            className="text-indigo-500 dark:text-indigo-400 font-medium text-sm"
             target="_blank"
           >
             fal-ai/ccsr
@@ -39,7 +46,7 @@ const OriginalCompare = ({
               onPositionChange={(position) => setPosition(position)}
               itemOne={
                 <>
-                  <div className="absolute top-[50%] left-4 bg-black/50 text-xs py-1 rounded-full px-2">
+                  <div className="absolute top-[50%] left-4 text-black dark:text-white bg-white/40 dark:bg-black/50 text-xs py-1 rounded-full px-2">
                     Original
                   </div>
                   <ReactCompareSliderImage
@@ -51,22 +58,11 @@ const OriginalCompare = ({
               }
               itemTwo={
                 <>
-                  <div className="absolute flex items-center space-x-2 top-[50%] right-4 bg-black/50 text-xs py-1 rounded-full px-2">
-                    <span>CCSR</span>
-                    {modelOne ? (
-                      <span
-                        className={
-                          !modelOne ? "text-neutral-500" : "text-green-400"
-                        }
-                      >
-                        {modelOne
-                          ? formatTime(modelOne.inferenceTime * 1000)
-                          : `n/a`}
-                      </span>
-                    ) : (
-                      <LoaderIcon className="animate-spin w-4 h-4 text-green-400" />
-                    )}
-                  </div>
+                  <CompareImageLabel
+                    modelData={modelOne}
+                    name="CCSR"
+                    position="right"
+                  />
                   <ReactCompareSliderImage
                     src={modelOne?.image as string}
                     srcSet={modelOne?.image as string}
@@ -103,7 +99,7 @@ const OriginalCompare = ({
           />
           <a
             href="https://fal.ai/models/supir"
-            className="text-indigo-400 font-medium text-sm"
+            className="text-indigo-500 dark:text-indigo-400 font-medium text-sm"
             target="_blank"
           >
             fal-ai/supir
@@ -117,7 +113,7 @@ const OriginalCompare = ({
               onPositionChange={(position) => setPosition(position)}
               itemOne={
                 <>
-                  <div className="absolute top-[50%] left-4 bg-black/50 text-xs py-1 rounded-full px-2">
+                  <div className="absolute top-[50%] left-4 text-black dark:text-white bg-white/40 dark:bg-black/50 text-xs py-1 rounded-full px-2">
                     Original
                   </div>
                   <ReactCompareSliderImage
@@ -134,22 +130,11 @@ const OriginalCompare = ({
                     srcSet={modelTwo?.image as string}
                     alt="Image one"
                   />
-                  <div className="absolute flex items-center space-x-2 top-[50%] right-4 bg-black/50 text-xs py-1 rounded-full px-2">
-                    <span>SUPIR</span>
-                    {modelTwo ? (
-                      <span
-                        className={
-                          !modelTwo ? "text-neutral-500" : "text-green-400"
-                        }
-                      >
-                        {modelTwo
-                          ? formatTime(modelTwo.inferenceTime * 1000)
-                          : `n/a`}
-                      </span>
-                    ) : (
-                      <LoaderIcon className="animate-spin w-4 h-4 text-green-400" />
-                    )}
-                  </div>
+                  <CompareImageLabel
+                    position="right"
+                    modelData={modelTwo}
+                    name="SUPIR"
+                  />
                 </>
               }
             />

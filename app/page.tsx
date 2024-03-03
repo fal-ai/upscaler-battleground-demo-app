@@ -73,10 +73,6 @@ export default function Lightning() {
       },
       logs: true,
       onQueueUpdate: (update) => {
-        if (update.status === "IN_PROGRESS" && update.logs) {
-          // update.logs.map((log) => log.message).forEach(console.log);
-          console.log(update.logs.slice(-1)[0]?.message);
-        }
         if (update.status === "COMPLETED") {
           inferenceTime = update.metrics.inference_time as number;
         }
@@ -118,7 +114,7 @@ export default function Lightning() {
           <div className="container px-3 md:px-0 flex flex-col mt-10">
             <div className="flex flex-row items-center justify-center space-x-3">
               <div className="w-80 flex flex-col justify-center items-center space-y-2">
-                <label className="text-neutral-400 ml-4 uppercase text-xs">
+                <label className="text-neutral-500 dark:text-neutral-400 ml-4 uppercase text-xs">
                   Image
                 </label>
                 <Input
@@ -133,14 +129,15 @@ export default function Lightning() {
                 />
               </div>
               <div className="flex flex-col space-y-2 text-sm items-center justify-center">
-                <label className="text-neutral-400 uppercase text-xs">
+                <label className="text-neutral-500 dark:text-neutral-400 uppercase text-xs">
                   Compare Mode
                 </label>
-                <div className="w-fit bg-neutral-900 p-1 rounded-full flex items-center justify-between space-x-2">
+                <div className="w-fit select-none text-neutral-600 dark:text-neutral-300 bg-neutral-200 dark:bg-neutral-900 p-1 rounded-full flex items-center justify-between space-x-2">
                   <span
                     onClick={() => setMode("original")}
                     className={cn(
-                      mode === "original" && "bg-neutral-200 text-black",
+                      mode === "original" &&
+                        "bg-neutral-900 text-white dark:bg-neutral-200 dark:text-black",
                       "w-1/2 cursor-pointer text-sm  rounded-full h-8 px-3 flex items-center"
                     )}
                   >
@@ -149,7 +146,8 @@ export default function Lightning() {
                   <span
                     onClick={() => setMode("model")}
                     className={cn(
-                      mode === "model" && "bg-neutral-200 text-black",
+                      mode === "model" &&
+                        "bg-neutral-900 text-white dark:bg-neutral-200 dark:text-black",
                       "w-1/2 cursor-pointer text-sm  rounded-full h-8 px-3 flex items-center"
                     )}
                   >
