@@ -115,9 +115,9 @@ export default function Lightning() {
     <main>
       <div className="flex flex-col justify-between h-[calc(100vh-56px)]">
         <div className="py-4 md:py-10 px-0 space-y-4 lg:space-y-8 mx-auto w-full max-w-5xl">
-          <div className="container px-3 md:px-0 flex flex-col space-y-2 mt-10">
-            <div className="flex flex-row items-center justify-center">
-              <div className="w-80">
+          <div className="container px-3 md:px-0 flex flex-col mt-10">
+            <div className="flex flex-row items-center justify-center space-x-3">
+              <div className="w-80 flex flex-col justify-center items-center space-y-2">
                 <label className="text-neutral-400 ml-4 uppercase text-xs">
                   Image
                 </label>
@@ -128,7 +128,7 @@ export default function Lightning() {
                       handleOnChange(e.target?.files?.[0]);
                     }
                   }}
-                  className="font-light mx-auto rounded-l-full h-10 pr-10 truncate"
+                  className="font-light mx-auto rounded-full h-10 pr-10 truncate"
                   placeholder="Type something..."
                 />
               </div>
@@ -136,7 +136,7 @@ export default function Lightning() {
                 <label className="text-neutral-400 uppercase text-xs">
                   Compare Mode
                 </label>
-                <div className="w-fit bg-neutral-900 p-1 rounded-full -ml-10 flex items-center justify-between space-x-2">
+                <div className="w-fit bg-neutral-900 p-1 rounded-full flex items-center justify-between space-x-2">
                   <span
                     onClick={() => setMode("original")}
                     className={cn(

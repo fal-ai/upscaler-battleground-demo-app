@@ -18,9 +18,9 @@ export function Nav() {
       <div className="flex flex-1 items-center">
         <Link href="/">
           <h1 className={cn("font-light text-xl", spaceMono.className)}>
-            <span className="text-pink-700">sdxl</span>
-            <span>⚡️</span>
-            <span>lightning</span>
+            <span className="text-pink-700">upscaler</span>
+            <span>⚖️</span>
+            <span>comparator</span>
           </h1>
         </Link>
       </div>
