@@ -101,8 +101,8 @@ export default function Lightning() {
     setModelOne(null);
     setModelTwo(null);
 
-    upscaleWithModelTwo(file);
     upscaleWithModelOne(file);
+    upscaleWithModelTwo(file);
   };
 
   useEffect(() => {

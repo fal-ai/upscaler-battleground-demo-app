@@ -8,9 +8,10 @@ import { Analytics } from "@vercel/analytics/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "SDXL Lightning - by fal.ai",
-  description: "Lightning fast SDXL API demo by fal.ai",
+  title: "Upscaler Comparator - by fal.ai",
+  description: "Comparator for Upscalers",
   authors: [{ name: "fal.ai", url: "https://fal.ai" }],
+  // [TODO]: Update this to the correct URL
   metadataBase: new URL("https://fastsdxl.ai"),
   openGraph: {
     images: "/og_thumbnail.jpeg",

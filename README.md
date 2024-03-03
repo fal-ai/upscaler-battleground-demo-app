@@ -1,6 +1,6 @@
-## Lightning Fast SDXL API demo by fal.ai
+## Upscaler Comparator by fal.ai
 
-This application is a sample of the SDXL Lightning API [https://fal.ai/models/stable-diffusion-xl-lightning]. It also shows the `fal.realtime` client in action.
+This application is a comparator for Upscalers. It also shows the `fal.subscribe` client in action.
 
 ### Prerequisites
 
@@ -10,6 +10,6 @@ This application is a sample of the SDXL Lightning API [https://fal.ai/models/st
 
 1. Add the `FAL_KEY` to your `.env.local` file.
 2. Run
-    ```sh
-    npm run dev
-    ```
+   ```sh
+   npm run dev
+   ```
