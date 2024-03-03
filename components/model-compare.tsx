@@ -90,7 +90,7 @@ const ModelCompare = ({
             />
           </div>
         ) : (
-          <div className="w-full md:w-1/2 bg-neutral-900 h-96 md:h-[512px] flex items-center justify-center">
+          <div className="w-full md:w-1/2 bg-neutral-200 dark:bg-neutral-900 h-96 md:h-[512px] flex items-center justify-center">
             <Image
               width={150}
               height={150}
