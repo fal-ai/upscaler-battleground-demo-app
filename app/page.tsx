@@ -48,10 +48,12 @@ export default function Lightning() {
   const [modelOne, setModelOne] = useState<ModelResult | null>(null);
   const [modelTwo, setModelTwo] = useState<ModelResult | null>(null);
 
-  const connect = async (prompt: File) => {
+  const upscaleWithModelOne = async (file: File) => {
+    let inferenceTime;
+
     const result: Record<string, any> = await fal.subscribe("fal-ai/ccsr", {
       input: {
-        image_url: prompt,
+        image_url: file,
       },
       logs: true,
       onQueueUpdate: (update) => {
@@ -59,23 +61,59 @@ export default function Lightning() {
           // update.logs.map((log) => log.message).forEach(console.log);
           console.log(update.logs.slice(-1)[0]?.message);
         }
+        if (update.status === "COMPLETED") {
+          inferenceTime = update.metrics.inference_time as number;
+        }
       },
     });
 
     if (result) {
+      setModelOne({
+        name: "CCSR",
+        image: result.image.url as string,
+        inferenceTime,
+      });
       setImage(result.image.url as string);
     }
 
     console.log(result);
   };
 
-  const timer = useRef<any | undefined>(undefined);
+  const upscaleWithModelTwo = async (file: File) => {
+    let inferenceTime;
 
-  const handleOnChange = async (prompt: File) => {
-    const blobUrl = URL.createObjectURL(prompt);
+    const result: Record<string, any> = await fal.subscribe("fal-ai/supir", {
+      input: {
+        image_url: file,
+      },
+      logs: true,
+      onQueueUpdate: (update) => {
+        if (update.status === "IN_PROGRESS" && update.logs) {
+          // update.logs.map((log) => log.message).forEach(console.log);
+          console.log(update.logs.slice(-1)[0]?.message);
+        }
+        if (update.status === "COMPLETED") {
+          inferenceTime = update.metrics.inference_time as number;
+        }
+      },
+    });
+
+    if (result) {
+      setModelTwo({
+        name: "SUPIR",
+        image: result.image.url as string,
+        inferenceTime,
+      });
+      setImage(result.image.url as string);
+    }
+  };
+
+  const handleOnChange = async (file: File) => {
+    const blobUrl = URL.createObjectURL(file);
     setOriginalImage(blobUrl);
 
-    connect(prompt);
+    upscaleWithModelOne(file);
+    upscaleWithModelTwo(file);
   };
 
   useEffect(() => {
@@ -117,23 +155,25 @@ export default function Lightning() {
                         <>
                           <div className="absolute space-x-2 top-[50%] left-4 z-50 bg-white/10 text-xs py-1 rounded-full px-2">
                             <span>CCSR</span>
-                            {inferenceTime && (
+                            {modelOne && (
                               <span
                                 className={
-                                  !inferenceTime
+                                  !modelOne
                                     ? "text-neutral-500"
                                     : "text-green-400"
                                 }
                               >
-                                {inferenceTime
-                                  ? `${(inferenceTime * 1000).toFixed(0)}ms`
+                                {modelOne
+                                  ? `${(modelOne.inferenceTime * 1000).toFixed(
+                                      0
+                                    )}ms`
                                   : `n/a`}
                               </span>
                             )}
                           </div>
                           <ReactCompareSliderImage
-                            src={originalImage as string}
-                            srcSet={originalImage as string}
+                            src={modelOne?.image as string}
+                            srcSet={modelOne?.image as string}
                             alt="Image one"
                           />
                         </>
@@ -141,24 +181,26 @@ export default function Lightning() {
                       itemTwo={
                         <>
                           <div className="absolute space-x-2 top-[50%] right-4 z-50 bg-white/10 text-xs py-1 rounded-full px-2">
-                            {inferenceTime && (
+                            {modelTwo && (
                               <span
                                 className={
-                                  !inferenceTime
+                                  !modelTwo
                                     ? "text-neutral-500"
                                     : "text-green-400"
                                 }
                               >
-                                {inferenceTime
-                                  ? `${(inferenceTime * 1000).toFixed(0)}ms`
+                                {modelTwo
+                                  ? `${(modelTwo.inferenceTime * 1000).toFixed(
+                                      0
+                                    )}ms`
                                   : `n/a`}
                               </span>
                             )}
                             <span>SUPIR</span>
                           </div>
                           <ReactCompareSliderImage
-                            src={image as string}
-                            srcSet={image as string}
+                            src={modelTwo?.image as string}
+                            srcSet={modelTwo?.image as string}
                             alt="Image one"
                           />
                         </>
@@ -172,7 +214,7 @@ export default function Lightning() {
           {mode === "original" && (
             <div className="container flex flex-col space-y-6 lg:flex-row lg:space-y-0 p-3 md:px-0 pt-10 space-x-6">
               <div className="flex-1 flex-col flex items-center justify-center">
-                {image && inferenceTime && (
+                {image && modelOne && (
                   <div className="flex space-x-3 w-full">
                     <div className="flex flex-row space-x-1 text-sm mb-2">
                       <span className="text-neutral-500">Modal:</span>
@@ -184,11 +226,11 @@ export default function Lightning() {
                       <span className="text-neutral-500">Inference time:</span>
                       <span
                         className={
-                          !inferenceTime ? "text-neutral-500" : "text-green-400"
+                          !modelOne ? "text-neutral-500" : "text-green-400"
                         }
                       >
-                        {inferenceTime
-                          ? `${(inferenceTime * 1000).toFixed(0)}ms`
+                        {modelOne
+                          ? `${(modelOne.inferenceTime * 1000).toFixed(0)}ms`
                           : `n/a`}
                       </span>
                     </div>
@@ -217,8 +259,8 @@ export default function Lightning() {
                             CCSR
                           </div>
                           <ReactCompareSliderImage
-                            src={image as string}
-                            srcSet={image as string}
+                            src={modelTwo?.image as string}
+                            srcSet={modelTwo?.image as string}
                             alt="Image one"
                           />
                         </>
@@ -232,7 +274,7 @@ export default function Lightning() {
               </div>
 
               <div className="flex-1 flex-col flex items-center justify-center">
-                {image && inferenceTime && (
+                {image && modelTwo && (
                   <div className="flex space-x-3 w-full">
                     <div className="flex flex-row space-x-1 text-sm mb-2">
                       <span className="w-1/2 text-neutral-500">Modal:</span>
@@ -244,11 +286,11 @@ export default function Lightning() {
                       <span className="text-neutral-500">Inference time:</span>
                       <span
                         className={
-                          !inferenceTime ? "text-neutral-500" : "text-green-400"
+                          !modelTwo ? "text-neutral-500" : "text-green-400"
                         }
                       >
-                        {inferenceTime
-                          ? `${(inferenceTime * 1000).toFixed(0)}ms`
+                        {modelTwo
+                          ? `${(modelTwo.inferenceTime * 1000).toFixed(0)}ms`
                           : `n/a`}
                       </span>
                     </div>
