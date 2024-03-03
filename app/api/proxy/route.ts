@@ -9,9 +9,10 @@ export const POST = (req: NextRequest) => {
     return new Response("Not found", { status: 404 });
   }
 
-  if (!URL_ALLOW_LIST.includes(url)) {
-    return new Response("Not allowed", { status: 403 });
-  }
+  // [TODO]: Disabled temporary
+  // if (!URL_ALLOW_LIST.includes(url)) {
+  //   return new Response("Not allowed", { status: 403 });
+  // }
 
   const appCheckCookie = req.cookies.get("fal-app");
   if (!appCheckCookie || !appCheckCookie.value) {
