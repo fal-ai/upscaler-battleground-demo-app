@@ -29,6 +29,11 @@ const OriginalCompare = ({
   secondModelOutput,
   secondModelLoading,
 }: OriginalCompareProps) => {
+  const hideFirstResult =
+    firstModelLoading || firstModelOutput?.model !== firstModel.model;
+  const hideSecondResult =
+    secondModelLoading || secondModelOutput?.model !== secondModel.model;
+
   return (
     <div className="container flex flex-col space-y-6 lg:flex-row lg:space-y-0 p-3 md:px-0 pt-0 lg:space-x-6">
       <div className="flex-1">
@@ -53,7 +58,7 @@ const OriginalCompare = ({
               itemTwo={
                 <>
                   <ReactCompareSliderImage
-                    className={cn(!firstModelOutput && "blur-md")}
+                    className={cn(hideFirstResult && "blur-md")}
                     src={(firstModelOutput?.image || originalImage) as string}
                     srcSet={
                       (firstModelOutput?.image || originalImage) as string
@@ -62,7 +67,8 @@ const OriginalCompare = ({
                   />
                   <CompareImageLabel
                     loading={firstModelLoading}
-                    modelData={firstModelOutput}
+                    modelData={firstModel}
+                    modelOutput={firstModelOutput}
                     name={firstModel?.shortname}
                     position="right"
                   />
@@ -124,7 +130,7 @@ const OriginalCompare = ({
               itemTwo={
                 <>
                   <ReactCompareSliderImage
-                    className={cn(!secondModelOutput && "blur-md")}
+                    className={cn(hideSecondResult && "blur-md")}
                     src={(secondModelOutput?.image || originalImage) as string}
                     srcSet={
                       (secondModelOutput?.image || originalImage) as string
@@ -133,7 +139,8 @@ const OriginalCompare = ({
                   />
                   <CompareImageLabel
                     loading={secondModelLoading}
-                    modelData={secondModelOutput}
+                    modelData={secondModel}
+                    modelOutput={secondModelOutput}
                     name={secondModel?.shortname}
                     position="right"
                   />

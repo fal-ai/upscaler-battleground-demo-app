@@ -29,6 +29,11 @@ const ModelCompare = ({
   secondModelOutput,
   secondModelLoading,
 }: ModelCompareProps) => {
+  const hideFirstResult =
+    firstModelLoading || firstModelOutput?.model !== firstModel.model;
+  const hideSecondResult =
+    secondModelLoading || secondModelOutput?.model !== secondModel.model;
+
   return (
     <div className="container flex flex-col space-y-6 lg:flex-row lg:space-y-0 p-3 md:px-0 pt-2 space-x-6">
       <div className="flex-1 flex-col flex w-full items-center justify-center">
@@ -41,7 +46,7 @@ const ModelCompare = ({
               itemOne={
                 <>
                   <ReactCompareSliderImage
-                    className={cn(!firstModelOutput && "blur-md")}
+                    className={cn(hideFirstResult && "blur-md")}
                     src={(firstModelOutput?.image || originalImage) as string}
                     srcSet={
                       (firstModelOutput?.image || originalImage) as string
@@ -49,8 +54,9 @@ const ModelCompare = ({
                     alt="Image one"
                   />
                   <CompareImageLabel
+                    modelData={firstModel}
+                    modelOutput={firstModelOutput}
                     loading={firstModelLoading}
-                    modelData={firstModelOutput}
                     name={firstModel?.shortname}
                   />
                 </>
@@ -58,7 +64,7 @@ const ModelCompare = ({
               itemTwo={
                 <>
                   <ReactCompareSliderImage
-                    className={cn(!secondModelOutput && "blur-md")}
+                    className={cn(hideSecondResult && "blur-md")}
                     src={(secondModelOutput?.image || originalImage) as string}
                     srcSet={
                       (secondModelOutput?.image || originalImage) as string
@@ -67,7 +73,8 @@ const ModelCompare = ({
                   />
                   <CompareImageLabel
                     loading={secondModelLoading}
-                    modelData={secondModelOutput}
+                    modelData={secondModel}
+                    modelOutput={secondModelOutput}
                     name={secondModel?.shortname}
                     position="right"
                   />
