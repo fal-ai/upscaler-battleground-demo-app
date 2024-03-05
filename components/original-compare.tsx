@@ -10,35 +10,24 @@ interface OriginalCompareProps {
   originalImage: string | null;
   position: number;
   setPosition: (position: number) => void;
-  modelOne: any;
-  modelTwo: any;
+  firstModel: any;
+  firstModelOutput: any;
+  secondModel: any;
+  secondModelOutput: any;
 }
 
 const OriginalCompare = ({
   originalImage,
   position,
   setPosition,
-  modelOne,
-  modelTwo,
+  firstModel,
+  firstModelOutput,
+  secondModel,
+  secondModelOutput,
 }: OriginalCompareProps) => {
   return (
-    <div className="container flex flex-col space-y-6 lg:flex-row lg:space-y-0 p-3 md:px-0 pt-7 lg:space-x-6">
+    <div className="container flex flex-col space-y-6 lg:flex-row lg:space-y-0 p-3 md:px-0 pt-0 lg:space-x-6">
       <div className="flex-1">
-        <div className="flex items-center space-x-2 mb-1">
-          <Image
-            alt=""
-            src="https://fal.ai/fal-icon.svg"
-            width={16}
-            height={16}
-          />
-          <a
-            href="https://fal.ai/models/ccsr"
-            className="text-indigo-500 dark:text-indigo-400 font-medium text-sm"
-            target="_blank"
-          >
-            fal-ai/ccsr
-          </a>
-        </div>
         {originalImage ? (
           <div className="md:min-h-[512px] w-full flex items-center just">
             <ReactCompareSlider
@@ -60,14 +49,16 @@ const OriginalCompare = ({
               itemTwo={
                 <>
                   <ReactCompareSliderImage
-                    className={cn(!modelOne && "blur-md")}
-                    src={(modelOne?.image || originalImage) as string}
-                    srcSet={(modelOne?.image || originalImage) as string}
+                    className={cn(!firstModelOutput && "blur-md")}
+                    src={(firstModelOutput?.image || originalImage) as string}
+                    srcSet={
+                      (firstModelOutput?.image || originalImage) as string
+                    }
                     alt="Image one"
                   />
                   <CompareImageLabel
-                    modelData={modelOne}
-                    name="CCSR"
+                    modelData={firstModelOutput}
+                    name={firstModel?.shortname}
                     position="right"
                   />
                 </>
@@ -86,24 +77,27 @@ const OriginalCompare = ({
             />
           </div>
         )}
+
+        {firstModel && (
+          <div className="flex items-center space-x-2 mb-1 mt-2">
+            <Image
+              alt=""
+              src="https://fal.ai/fal-icon.svg"
+              width={16}
+              height={16}
+            />
+            <a
+              href={firstModel.link}
+              className="text-indigo-500 dark:text-indigo-400 font-medium text-sm"
+              target="_blank"
+            >
+              {firstModel.model}
+            </a>
+          </div>
+        )}
       </div>
 
       <div className="flex-1">
-        <div className="flex items-center justify-end space-x-2 mb-1">
-          <Image
-            alt=""
-            src="https://fal.ai/fal-icon.svg"
-            width={16}
-            height={16}
-          />
-          <a
-            href="https://fal.ai/models/supir"
-            className="text-indigo-500 dark:text-indigo-400 font-medium text-sm"
-            target="_blank"
-          >
-            fal-ai/supir
-          </a>
-        </div>
         {originalImage ? (
           <div className="md:min-h-[512px] w-full flex items-center justify-center">
             <ReactCompareSlider
@@ -125,15 +119,17 @@ const OriginalCompare = ({
               itemTwo={
                 <>
                   <ReactCompareSliderImage
-                    className={cn(!modelTwo && "blur-md")}
-                    src={(modelTwo?.image || originalImage) as string}
-                    srcSet={(modelTwo?.image || originalImage) as string}
+                    className={cn(!secondModelOutput && "blur-md")}
+                    src={(secondModelOutput?.image || originalImage) as string}
+                    srcSet={
+                      (secondModelOutput?.image || originalImage) as string
+                    }
                     alt="Image one"
                   />
                   <CompareImageLabel
+                    modelData={secondModelOutput}
+                    name={secondModel?.shortname}
                     position="right"
-                    modelData={modelTwo}
-                    name="SUPIR"
                   />
                 </>
               }
@@ -149,6 +145,23 @@ const OriginalCompare = ({
               alt="fal.ai icon used as image placeholder and loading indicator"
               data-loading="false"
             />
+          </div>
+        )}
+        {secondModel && (
+          <div className="flex items-center justify-end space-x-2 mb-1 mt-2">
+            <Image
+              alt=""
+              src="https://fal.ai/fal-icon.svg"
+              width={16}
+              height={16}
+            />
+            <a
+              href={secondModel.link}
+              className="text-indigo-500 dark:text-indigo-400 font-medium text-sm"
+              target="_blank"
+            >
+              {secondModel.model}
+            </a>
           </div>
         )}
       </div>

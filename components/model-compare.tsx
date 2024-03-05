@@ -10,52 +10,24 @@ interface ModelCompareProps {
   originalImage: string | null;
   position: number;
   setPosition: (position: number) => void;
-  modelOne: any;
-  modelTwo: any;
+  firstModel: any;
+  firstModelOutput: any;
+  secondModel: any;
+  secondModelOutput: any;
 }
 
 const ModelCompare = ({
   originalImage,
   position,
   setPosition,
-  modelOne,
-  modelTwo,
+  firstModel,
+  firstModelOutput,
+  secondModel,
+  secondModelOutput,
 }: ModelCompareProps) => {
   return (
-    <div className="container flex flex-col space-y-6 lg:flex-row lg:space-y-0 p-3 md:px-0 pt-7 space-x-6">
+    <div className="container flex flex-col space-y-6 lg:flex-row lg:space-y-0 p-3 md:px-0 pt-2 space-x-6">
       <div className="flex-1 flex-col flex w-full items-center justify-center">
-        <div className="flex items-center justify-between w-full md:w-1/2">
-          <div className="flex items-center justify-end space-x-2 mb-1">
-            <Image
-              alt=""
-              src="https://fal.ai/fal-icon.svg"
-              width={16}
-              height={16}
-            />
-            <a
-              href="https://fal.ai/models/ccsr"
-              className="text-indigo-400 font-medium text-sm"
-              target="_blank"
-            >
-              fal-ai/ccsr
-            </a>
-          </div>
-          <div className="flex items-center justify-end space-x-2 mb-1">
-            <Image
-              alt=""
-              src="https://fal.ai/fal-icon.svg"
-              width={16}
-              height={16}
-            />
-            <a
-              href="https://fal.ai/models/supir"
-              className="text-indigo-400 font-medium text-sm"
-              target="_blank"
-            >
-              fal-ai/supir
-            </a>
-          </div>
-        </div>
         {originalImage ? (
           <div className="md:min-h-[512px] w-full md:w-1/2 bg-neutral-900 flex">
             <ReactCompareSlider
@@ -65,25 +37,32 @@ const ModelCompare = ({
               itemOne={
                 <>
                   <ReactCompareSliderImage
-                    className={cn(!modelOne && "blur-md")}
-                    src={(modelOne?.image || originalImage) as string}
-                    srcSet={(modelOne?.image || originalImage) as string}
+                    className={cn(!firstModelOutput && "blur-md")}
+                    src={(firstModelOutput?.image || originalImage) as string}
+                    srcSet={
+                      (firstModelOutput?.image || originalImage) as string
+                    }
                     alt="Image one"
                   />
-                  <CompareImageLabel modelData={modelOne} name="CCSR" />
+                  <CompareImageLabel
+                    modelData={firstModelOutput}
+                    name={firstModel?.shortname}
+                  />
                 </>
               }
               itemTwo={
                 <>
                   <ReactCompareSliderImage
-                    className={cn(!modelTwo && "blur-md")}
-                    src={(modelTwo?.image || originalImage) as string}
-                    srcSet={(modelTwo?.image || originalImage) as string}
-                    alt="Image one"
+                    className={cn(!secondModelOutput && "blur-md")}
+                    src={(secondModelOutput?.image || originalImage) as string}
+                    srcSet={
+                      (secondModelOutput?.image || originalImage) as string
+                    }
+                    alt="Image two"
                   />
                   <CompareImageLabel
-                    modelData={modelTwo}
-                    name="SUPIR"
+                    modelData={secondModelOutput}
+                    name={secondModel?.shortname}
                     position="right"
                   />
                 </>
@@ -100,6 +79,40 @@ const ModelCompare = ({
               alt="fal.ai icon used as image placeholder and loading indicator"
               data-loading="false"
             />
+          </div>
+        )}
+        {firstModel && secondModel && (
+          <div className="flex items-center justify-between w-full md:w-1/2 mt-2">
+            <div className="flex items-center justify-end space-x-2 mb-1">
+              <Image
+                alt=""
+                src="https://fal.ai/fal-icon.svg"
+                width={16}
+                height={16}
+              />
+              <a
+                href={firstModel?.link}
+                className="text-indigo-400 font-medium text-sm"
+                target="_blank"
+              >
+                {firstModel?.model}
+              </a>
+            </div>
+            <div className="flex items-center justify-end space-x-2 mb-1">
+              <Image
+                alt=""
+                src="https://fal.ai/fal-icon.svg"
+                width={16}
+                height={16}
+              />
+              <a
+                href={secondModel?.link}
+                className="text-indigo-400 font-medium text-sm"
+                target="_blank"
+              >
+                {secondModel?.model}
+              </a>
+            </div>
           </div>
         )}
       </div>
