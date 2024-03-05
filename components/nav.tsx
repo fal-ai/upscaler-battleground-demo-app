@@ -19,25 +19,20 @@ export function Nav() {
         <Link href="/">
           <h1 className={cn("font-light text-xl", spaceMono.className)}>
             <span className="text-pink-700">upscaler</span>
-            <span>⚖️</span>
-            <span>comparator</span>
+            <span>⚔️</span>
+            <span>battleground</span>
           </h1>
         </Link>
       </div>
       <div className="flex flex-none items-center space-x-4">
         <ThemeToggle />
-        <Button size="sm" asChild>
-          <Link
-            href="https://github.com/fal-ai/sdxl-lightning-demo-app"
-            className="flex flex-row space-x-2 items-center"
-            target="_blank"
-          >
-            <GithubIcon className="h-5 w-5" />
-            <span>
-              <span className="hidden md:inline-block">Fork on</span> GitHub
-            </span>
-          </Link>
-        </Button>
+        <Link
+          href="https://github.com/fal-ai/sdxl-lightning-demo-app"
+          className="flex flex-row space-x-2 items-center"
+          target="_blank"
+        >
+          <GithubIcon className="h-5 w-5" />
+        </Link>
       </div>
     </div>
   );
