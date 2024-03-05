@@ -10,32 +10,50 @@ import { ModelIcon } from "@/components/icons/model-icon";
 import { cn } from "@/lib/utils";
 import ModelCompare from "@/components/model-compare";
 import OriginalCompare from "@/components/original-compare";
+import {
+  type Model,
+  ModelDropdown,
+  UPSCALE_MODELS,
+} from "@/components/model-dropdown";
+import { Button } from "@/components/ui/button";
 
 fal.config({ proxyUrl: "/api/proxy" });
 
 interface ModelResult {
-  name: string;
   image: string;
   inferenceTime: number;
 }
 
 type CompareMode = "original" | "model";
 
+UPSCALE_MODELS;
+
 export default function Lightning() {
   const [mode, setMode] = useState<CompareMode>("original");
   const [position, setPosition] = useState<number>(50);
   const [originalImage, setOriginalImage] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
-  const [modelOne, setModelOne] = useState<ModelResult | null>(null);
-  const [modelOneLoading, setModelOneLoading] = useState<boolean>(false);
-  const [modelTwo, setModelTwo] = useState<ModelResult | null>(null);
-  const [modelTwoLoading, setModelTwoLoading] = useState<boolean>(false);
+  const [firstModelLoading, setFirstModelLoading] = useState<boolean>(false);
+  const [secondModelLoading, setSecondModelLoading] = useState<boolean>(false);
+  const [firstModel, setFirstModel] = useState<Model | null>(UPSCALE_MODELS[0]);
+  const [secondModel, setSecondModel] = useState<Model | null>(
+    UPSCALE_MODELS[1]
+  );
+  const [firstModelOutput, setFirstModelOutput] = useState<ModelResult | null>(
+    null
+  );
+  const [secondModelOutput, setSecondModelOutput] =
+    useState<ModelResult | null>(null);
 
-  const upscaleWithModelOne = async (file: File) => {
+  const upscaleWithFirstModel = async (file: File) => {
+    if (!firstModel) return;
+
+    setFirstModelLoading(true);
+
     let inferenceTime;
-    setModelOneLoading(true);
 
-    const result: Record<string, any> = await fal.subscribe("fal-ai/ccsr", {
+    const result: Record<string, any> = await fal.subscribe(firstModel.model, {
       input: {
         image_url: file,
       },
@@ -48,22 +66,23 @@ export default function Lightning() {
     });
 
     if (result) {
-      setModelOne({
-        name: "CCSR",
+      setFirstModelOutput({
         image: result.image.url as string,
         inferenceTime,
       });
     }
 
-    setModelOneLoading(false);
+    setFirstModelLoading(false);
   };
 
-  const upscaleWithModelTwo = async (file: File) => {
+  const upscaleWithSecondModel = async (file: File) => {
+    if (!secondModel) return;
+
+    setSecondModelLoading(true);
+
     let inferenceTime;
 
-    setModelTwoLoading(true);
-
-    const result: Record<string, any> = await fal.subscribe("fal-ai/supir", {
+    const result: Record<string, any> = await fal.subscribe(secondModel.model, {
       input: {
         image_url: file,
       },
@@ -76,25 +95,28 @@ export default function Lightning() {
     });
 
     if (result) {
-      setModelTwo({
-        name: "SUPIR",
+      setSecondModelOutput({
         image: result.image.url as string,
         inferenceTime,
       });
     }
 
-    setModelTwoLoading(false);
+    setSecondModelLoading(false);
   };
 
-  const handleOnChange = async (file: File) => {
-    const blobUrl = URL.createObjectURL(file);
+  const handleCompare = async () => {
+    if (!imageFile) return;
+
+    setPosition(50);
+
+    const blobUrl = URL.createObjectURL(imageFile);
     setOriginalImage(blobUrl);
 
-    setModelOne(null);
-    setModelTwo(null);
+    setFirstModelOutput(null);
+    setSecondModelOutput(null);
 
-    upscaleWithModelOne(file);
-    upscaleWithModelTwo(file);
+    upscaleWithFirstModel(imageFile);
+    upscaleWithSecondModel(imageFile);
   };
 
   useEffect(() => {
@@ -106,7 +128,7 @@ export default function Lightning() {
   return (
     <main>
       <div className="flex flex-col justify-between h-[calc(100vh-56px)]">
-        <div className="py-4 md:pb-10 px-0 space-y-4 lg:space-y-8 mx-auto w-full max-w-5xl">
+        <div className="py-4 md:pb-10 px-0  mx-auto w-full max-w-5xl">
           <div className="container px-3 md:px-0 flex flex-col mt-10">
             <div className="flex flex-row items-center justify-center space-x-3">
               <div className="w-80 flex flex-col justify-center items-center space-y-2">
@@ -116,11 +138,12 @@ export default function Lightning() {
                 <Input
                   type="file"
                   onChange={(e) => {
-                    if (e.target?.files?.[0]) {
-                      handleOnChange(e.target?.files?.[0]);
-                    }
+                    setImageFile(e.target?.files?.[0] || null);
                   }}
-                  className="font-light mx-auto rounded-full h-10 pr-10 truncate"
+                  className={cn(
+                    "font-light mx-auto rounded-full h-10 pr-10 truncate",
+                    !imageFile && "border-orange-400"
+                  )}
                   placeholder="Type something..."
                 />
               </div>
@@ -153,13 +176,34 @@ export default function Lightning() {
               </div>
             </div>
           </div>
+          <div className="flex w-full items-end justify-between mb-1 mt-10 border-b pb-2">
+            <div className="w-1/3 flex justify-start">
+              <ModelDropdown
+                onSelect={(model) => setFirstModel(model)}
+                value={firstModel}
+              />
+            </div>
+            <div className="w-1/3 flex justify-center">
+              <Button size="lg" onClick={handleCompare} disabled={!imageFile}>
+                Compare
+              </Button>
+            </div>
+            <div className="w-1/3 flex justify-end">
+              <ModelDropdown
+                onSelect={(model) => setSecondModel(model)}
+                value={secondModel}
+              />
+            </div>
+          </div>
           {mode === "model" && (
             <ModelCompare
               originalImage={originalImage}
               position={position}
               setPosition={setPosition}
-              modelOne={modelOne}
-              modelTwo={modelTwo}
+              firstModel={firstModel}
+              firstModelOutput={firstModelOutput}
+              secondModel={secondModel}
+              secondModelOutput={secondModelOutput}
             />
           )}
           {mode === "original" && (
@@ -167,8 +211,10 @@ export default function Lightning() {
               originalImage={originalImage}
               position={position}
               setPosition={setPosition}
-              modelOne={modelOne}
-              modelTwo={modelTwo}
+              firstModel={firstModel}
+              firstModelOutput={firstModelOutput}
+              secondModel={secondModel}
+              secondModelOutput={secondModelOutput}
             />
           )}
         </div>
