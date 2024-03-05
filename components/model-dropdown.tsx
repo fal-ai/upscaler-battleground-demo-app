@@ -46,11 +46,13 @@ export const UPSCALE_MODELS: Model[] = [
 ];
 
 export function ModelDropdown({
+  disableList,
   onSelect,
   value,
 }: {
   value: Model | null;
   onSelect: (model: Model) => void;
+  disableList: Array<string | undefined>;
 }) {
   return (
     <DropdownMenu>
@@ -62,7 +64,11 @@ export function ModelDropdown({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         {UPSCALE_MODELS.map((model) => (
-          <DropdownMenuItem key={model.name} onClick={() => onSelect(model)}>
+          <DropdownMenuItem
+            key={model.name}
+            disabled={disableList.includes(model.model)}
+            onClick={() => onSelect(model)}
+          >
             {model.name}
           </DropdownMenuItem>
         ))}
