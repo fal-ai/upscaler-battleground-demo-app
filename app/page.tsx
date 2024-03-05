@@ -21,6 +21,7 @@ import { LoaderIcon } from "lucide-react";
 fal.config({ proxyUrl: "/api/proxy" });
 
 interface ModelResult {
+  model: string;
   image: string;
   inferenceTime: number;
 }
@@ -66,6 +67,7 @@ export default function UpscalerBattleground() {
 
     if (result) {
       setFirstModelOutput({
+        model: firstModel.model,
         image: result.image.url as string,
         inferenceTime,
       });
@@ -95,6 +97,7 @@ export default function UpscalerBattleground() {
 
     if (result) {
       setSecondModelOutput({
+        model: secondModel.model,
         image: result.image.url as string,
         inferenceTime,
       });
