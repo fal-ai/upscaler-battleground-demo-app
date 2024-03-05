@@ -12,8 +12,10 @@ interface OriginalCompareProps {
   setPosition: (position: number) => void;
   firstModel: any;
   firstModelOutput: any;
+  firstModelLoading: boolean;
   secondModel: any;
   secondModelOutput: any;
+  secondModelLoading: boolean;
 }
 
 const OriginalCompare = ({
@@ -22,8 +24,10 @@ const OriginalCompare = ({
   setPosition,
   firstModel,
   firstModelOutput,
+  firstModelLoading,
   secondModel,
   secondModelOutput,
+  secondModelLoading,
 }: OriginalCompareProps) => {
   return (
     <div className="container flex flex-col space-y-6 lg:flex-row lg:space-y-0 p-3 md:px-0 pt-0 lg:space-x-6">
@@ -57,6 +61,7 @@ const OriginalCompare = ({
                     alt="Image one"
                   />
                   <CompareImageLabel
+                    loading={firstModelLoading}
                     modelData={firstModelOutput}
                     name={firstModel?.shortname}
                     position="right"
@@ -127,6 +132,7 @@ const OriginalCompare = ({
                     alt="Image one"
                   />
                   <CompareImageLabel
+                    loading={secondModelLoading}
                     modelData={secondModelOutput}
                     name={secondModel?.shortname}
                     position="right"
