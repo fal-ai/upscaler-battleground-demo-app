@@ -4,12 +4,14 @@ import { LoaderIcon } from "lucide-react";
 interface CompareImageLabelProps {
   modelData: any;
   name: string;
+  loading: boolean;
   position?: "left" | "right";
 }
 
 const CompareImageLabel = ({
   modelData,
   name,
+  loading,
   position = "left",
 }: CompareImageLabelProps) => (
   <div
@@ -19,12 +21,12 @@ const CompareImageLabel = ({
     )}
   >
     <span>{name}</span>
-    {modelData ? (
+    {loading ? (
+      <LoaderIcon className="animate-spin w-4 h-4 text-green-400" />
+    ) : (
       <span className={!modelData ? "text-neutral-500" : "text-green-400"}>
         {modelData ? formatTime(modelData.inferenceTime * 1000) : `n/a`}
       </span>
-    ) : (
-      <LoaderIcon className="animate-spin w-4 h-4 text-green-400" />
     )}
   </div>
 );
