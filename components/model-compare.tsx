@@ -35,10 +35,10 @@ const ModelCompare = ({
     secondModelLoading || secondModelOutput?.model !== secondModel.model;
 
   return (
-    <div className="container flex flex-col space-y-6 lg:flex-row lg:space-y-0 p-3 md:px-0 pt-2 space-x-6">
-      <div className="flex-1 flex-col flex w-full items-center justify-center">
+    <div className="container flex w-full items-center justify-center space-y-6 p-3 md:px-0 pt-0">
+      <div className="flex-1 mx-auto md:mx-0 w-full md:w-1/2">
         {originalImage ? (
-          <div className="md:min-h-[512px] w-full md:w-1/2 bg-neutral-900 flex">
+          <div className="aspect-square mx-auto max-h-[512px] w-full flex items-center justify-center">
             <ReactCompareSlider
               className="w-full"
               position={position}
@@ -83,7 +83,7 @@ const ModelCompare = ({
             />
           </div>
         ) : (
-          <div className="w-full md:w-1/2 bg-neutral-200 dark:bg-neutral-900 h-96 md:h-[512px] flex items-center justify-center">
+          <div className="flex-1 mx-auto max-h-[512px] aspect-square bg-neutral-200 dark:bg-neutral-900 flex items-center justify-center">
             <Image
               width={150}
               height={150}
@@ -95,7 +95,7 @@ const ModelCompare = ({
           </div>
         )}
         {firstModel && secondModel && (
-          <div className="flex items-center justify-between w-full md:w-1/2 mt-2">
+          <div className="flex items-center mx-auto justify-between w-full md:w-1/2 mt-2">
             <div className="flex items-center justify-end space-x-2 mb-1">
               <Image
                 alt=""
