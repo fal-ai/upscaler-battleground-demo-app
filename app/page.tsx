@@ -54,7 +54,7 @@ export default function UpscalerBattleground() {
 
     let inferenceTime;
 
-    const resizedImage = await resizeImage(file, 512);
+    const resizedImage = await resizeImage(file);
     const result: Record<string, any> = await fal.subscribe(firstModel.model, {
       input: {
         image_url: resizedImage,
@@ -85,7 +85,7 @@ export default function UpscalerBattleground() {
 
     let inferenceTime;
 
-    const resizedImage = await resizeImage(file, 512);
+    const resizedImage = await resizeImage(file);
     const result: Record<string, any> = await fal.subscribe(secondModel.model, {
       input: {
         image_url: resizedImage,
@@ -121,13 +121,15 @@ export default function UpscalerBattleground() {
     if (image) {
       const blobUrl = URL.createObjectURL(image);
       setOriginalImage(blobUrl);
+      handleCompare(image);
     }
   };
-  const handleCompare = async () => {
-    if (!imageFile) return;
 
-    upscaleWithFirstModel(imageFile);
-    upscaleWithSecondModel(imageFile);
+  const handleCompare = async (image) => {
+    if (!image) return;
+
+    upscaleWithFirstModel(image);
+    upscaleWithSecondModel(image);
   };
 
   useEffect(() => {
@@ -189,7 +191,7 @@ export default function UpscalerBattleground() {
               <Button
                 size="lg"
                 className="mx-auto md:mx-0"
-                onClick={handleCompare}
+                onClick={() => handleCompare(imageFile)}
                 disabled={!imageFile || firstModelLoading || secondModelLoading}
               >
                 Compare
