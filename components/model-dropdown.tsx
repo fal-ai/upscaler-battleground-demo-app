@@ -16,6 +16,7 @@ export interface Model {
   name: string;
   model: string;
   link: string;
+  meta?: Record<string, any>;
 }
 
 export const UPSCALE_MODELS: Model[] = [
@@ -26,10 +27,58 @@ export const UPSCALE_MODELS: Model[] = [
     link: "https://fal.ai/models/ccsr",
   },
   {
-    shortname: "ESRGAN",
-    name: "ESRGAN Upscaler",
+    shortname: "ESRGANx4P",
+    name: "ESRGAN x4 Plus",
     model: "fal-ai/esrgan",
     link: "https://fal.run/fal-ai/esrgan",
+    meta: {
+      model: "RealESRGAN_x4plus",
+    },
+  },
+  {
+    shortname: "ESRGANx2P",
+    name: "ESRGAN x2 Plus",
+    model: "fal-ai/esrgan",
+    link: "https://fal.run/fal-ai/esrgan",
+    meta: {
+      model: "RealESRGAN_x2plus",
+    },
+  },
+  {
+    shortname: "ESRGANx4PA6B",
+    name: "ESRGAN x4 Plus Anime 6B",
+    model: "fal-ai/esrgan",
+    link: "https://fal.run/fal-ai/esrgan",
+    meta: {
+      model: "RealESRGAN_x4plus_anime_6B",
+    },
+  },
+  {
+    shortname: "ESRGANx4v3",
+    name: "ESRGAN x4 v3",
+    model: "fal-ai/esrgan",
+    link: "https://fal.run/fal-ai/esrgan",
+    meta: {
+      model: "RealESRGAN_x4_v3",
+    },
+  },
+  {
+    shortname: "ESRGANx4WdnV3",
+    name: "ESRGAN x4 Wdn v3",
+    model: "fal-ai/esrgan",
+    link: "https://fal.run/fal-ai/esrgan",
+    meta: {
+      model: "RealESRGAN_x4_wdn_v3",
+    },
+  },
+  {
+    shortname: "ESRGANx4Av3",
+    name: "ESRGAN x4 Anime v3",
+    model: "fal-ai/esrgan",
+    link: "https://fal.run/fal-ai/esrgan",
+    meta: {
+      model: "RealESRGAN_x4_anime_v3",
+    },
   },
   {
     shortname: "SUPIR",
@@ -66,7 +115,7 @@ export function ModelDropdown({
         {UPSCALE_MODELS.map((model) => (
           <DropdownMenuItem
             key={model.name}
-            disabled={disableList.includes(model.model)}
+            disabled={disableList.includes(model.shortname)}
             onClick={() => onSelect(model)}
           >
             {model.name}
