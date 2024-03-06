@@ -19,8 +19,8 @@ export function Nav() {
             className={cn("font-light text-sm md:text-lg", spaceMono.className)}
           >
             <span className="text-pink-700">upscaler</span>
-            <span className="mx-1">⚔️</span>
-            <span>battleground</span>
+            <span className="mx-1">🎉</span>
+            <span>party</span>
           </h1>
         </Link>
       </div>
