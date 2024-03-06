@@ -17,6 +17,7 @@ import {
 } from "@/components/model-dropdown";
 import { Button } from "@/components/ui/button";
 import { LoaderIcon } from "lucide-react";
+import { resizeImage } from "@/lib/image";
 
 fal.config({ proxyUrl: "/api/proxy" });
 
@@ -53,9 +54,10 @@ export default function UpscalerBattleground() {
 
     let inferenceTime;
 
+    const resizedImage = await resizeImage(file, 1024);
     const result: Record<string, any> = await fal.subscribe(firstModel.model, {
       input: {
-        image_url: file,
+        image_url: resizedImage,
       },
       logs: true,
       onQueueUpdate: (update) => {
@@ -83,9 +85,10 @@ export default function UpscalerBattleground() {
 
     let inferenceTime;
 
+    const resizedImage = await resizeImage(file, 1024);
     const result: Record<string, any> = await fal.subscribe(secondModel.model, {
       input: {
-        image_url: file,
+        image_url: resizedImage,
       },
       logs: true,
       onQueueUpdate: (update) => {
@@ -176,9 +179,10 @@ export default function UpscalerBattleground() {
                     onChange={handleImageSelect}
                     className={cn(
                       "font-light mx-auto rounded-full h-10 pr-10 truncate",
-                      !imageFile && "border-orange-400/40"
+                      !imageFile && "border-indigo-700/70"
                     )}
-                    placeholder="Type something..."
+                    accept="image/*"
+                    placeholder="Choose file..."
                   />
                 </div>
               </div>

@@ -8,8 +8,8 @@ import { Analytics } from "@vercel/analytics/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Upscaler Comparator - by fal.ai",
-  description: "Comparator for Upscalers",
+  title: "Upscaler Battleground - by fal.ai",
+  description: "A demo comparing different upscalers served by fal.ai",
   authors: [{ name: "fal.ai", url: "https://fal.ai" }],
   // [TODO]: Update this to the correct URL
   metadataBase: new URL("https://fastsdxl.ai"),
