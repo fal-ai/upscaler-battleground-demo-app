@@ -26,6 +26,12 @@ export const UPSCALE_MODELS: Model[] = [
     link: "https://fal.ai/models/ccsr",
   },
   {
+    shortname: "ESRGAN",
+    name: "ESRGAN Upscaler",
+    model: "fal-ai/esrgan",
+    link: "https://fal.run/fal-ai/esrgan",
+  },
+  {
     shortname: "SUPIR",
     name: "SUPIR Upscaler",
     model: "fal-ai/supir",
@@ -36,12 +42,6 @@ export const UPSCALE_MODELS: Model[] = [
     name: "Creative Upscaler",
     model: "fal-ai/creative-upscaler",
     link: "https://fal.ai/models/creative-upscaler",
-  },
-  {
-    shortname: "ESRGAN",
-    name: "ESRGAN Upscaler",
-    model: "fal-ai/esrgan",
-    link: "https://fal.run/fal-ai/esrgan",
   },
 ];
 
