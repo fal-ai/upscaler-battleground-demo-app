@@ -140,8 +140,8 @@ export default function UpscalerBattleground() {
     <main>
       <div className="flex flex-col justify-between h-[calc(100vh-56px)]">
         <div className="py-4 px-0  mx-auto w-full max-w-5xl">
-          <div className="container px-3 md:px-0 flex w-full items-center justify-between  mt-10 pb-3">
-            <div className="flex flex-col w-full md:flex-row md:items-end justify-between space-x-3">
+          <div className="container px-3 md:px-0 flex w-full items-center justify-between mt-4 md:mt-10 pb-3">
+            <div className="flex flex-col px-3 w-full md:flex-row md:items-end justify-between space-x-3">
               <div className="flex flex-col md:flex-row space-x-4 space-y-4 md:space-y-0 mb-4 md:mb-0">
                 <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 text-sm items-center justify-center">
                   <label className="text-neutral-500 md:mr-1 dark:text-neutral-400 uppercase text-xs">

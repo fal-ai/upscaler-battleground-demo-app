@@ -36,9 +36,9 @@ const OriginalCompare = ({
 
   return (
     <div className="container flex flex-col space-y-6 lg:flex-row lg:space-y-0 p-3 md:px-0 pt-0 lg:space-x-6">
-      <div className="flex-1">
+      <div className="flex-1 mx-1 md:mx-0">
         {originalImage ? (
-          <div className="md:min-h-[512px] w-full flex items-center just">
+          <div className="aspect-square w-full flex items-center justify-center">
             <ReactCompareSlider
               className="relative w-full"
               position={position}
@@ -77,7 +77,7 @@ const OriginalCompare = ({
             />
           </div>
         ) : (
-          <div className="w-full bg-neutral-200 dark:bg-neutral-900 h-96 md:h-[512px] flex items-center justify-center">
+          <div className="flex-1 mx-1 md:mx-0 aspect-square bg-neutral-200 dark:bg-neutral-900 flex items-center justify-center">
             <Image
               width={150}
               height={150}
@@ -108,9 +108,9 @@ const OriginalCompare = ({
         )}
       </div>
 
-      <div className="flex-1">
+      <div className="flex-1 mx-1 md:mx-0">
         {originalImage ? (
-          <div className="md:min-h-[512px] w-full flex items-center justify-center">
+          <div className="aspect-square w-full flex items-center justify-center">
             <ReactCompareSlider
               className="relative w-full"
               position={position}
@@ -149,7 +149,7 @@ const OriginalCompare = ({
             />
           </div>
         ) : (
-          <div className="w-full bg-neutral-200 dark:bg-neutral-900 h-96 md:h-[512px] flex items-center justify-center">
+          <div className="flex-1 mx-1 md:mx-0 aspect-square bg-neutral-200 dark:bg-neutral-900 flex items-center justify-center">
             <Image
               width={150}
               height={150}
