@@ -1,4 +1,4 @@
-export async function resizeImage(file: File, max: number = 1024): Promise<Blob> {
+export async function resizeImage(file: File, max: number = 512): Promise<Blob> {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
 

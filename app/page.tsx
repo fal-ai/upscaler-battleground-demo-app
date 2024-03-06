@@ -54,7 +54,7 @@ export default function UpscalerBattleground() {
 
     let inferenceTime;
 
-    const resizedImage = await resizeImage(file, 1024);
+    const resizedImage = await resizeImage(file, 512);
     const result: Record<string, any> = await fal.subscribe(firstModel.model, {
       input: {
         image_url: resizedImage,
@@ -85,7 +85,7 @@ export default function UpscalerBattleground() {
 
     let inferenceTime;
 
-    const resizedImage = await resizeImage(file, 1024);
+    const resizedImage = await resizeImage(file, 512);
     const result: Record<string, any> = await fal.subscribe(secondModel.model, {
       input: {
         image_url: resizedImage,
