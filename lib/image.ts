@@ -1,7 +1,4 @@
-export async function resizeImage(
-  file: File,
-  max: number = 1024,
-): Promise<Blob> {
+export async function resizeImage(file: File, max: number = 1024): Promise<Blob> {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
 
@@ -12,31 +9,18 @@ export async function resizeImage(
   const image = await loadImage(file);
 
   const targetSize = Math.min(max, Math.max(image.width, image.height));
-  console.log("targetSize", targetSize);
+
   const targetWidth =
-    image.width > image.height
-      ? targetSize
-      : Math.round((image.width / image.height) * targetSize);
+    image.width > image.height ? targetSize : Math.round((image.width / image.height) * targetSize);
   const targetHeight =
-    image.height > image.width
-      ? targetSize
-      : Math.round((image.height / image.width) * targetSize);
+    image.height > image.width ? targetSize : Math.round((image.height / image.width) * targetSize);
 
-  ctx.drawImage(image, 0, 0, targetWidth, targetHeight);
+  canvas.width = targetWidth;
+  canvas.height = targetHeight;
 
-  return new Promise((resolve, reject) => {
-    canvas.toBlob(
-      (blob) => {
-        if (!blob) {
-          reject(new Error("Failed to convert canvas to blob"));
-          return;
-        }
-        resolve(blob);
-      },
-      "image/jpeg",
-      0.7,
-    );
-  });
+  ctx.drawImage(image, 0, 0, image.width, image.height, 0, 0, targetWidth, targetHeight);
+
+  return await canvasToImage(canvas);
 }
 
 async function loadImage(file: File): Promise<HTMLImageElement> {
@@ -50,5 +34,21 @@ async function loadImage(file: File): Promise<HTMLImageElement> {
     };
     reader.onerror = reject;
     reader.readAsDataURL(file);
+  });
+}
+
+async function canvasToImage(canvas: HTMLCanvasElement): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => {
+        if (!blob) {
+          reject(new Error("Failed to convert canvas to blob"));
+          return;
+        }
+        resolve(blob);
+      },
+      "image/jpeg",
+      0.7,
+    );
   });
 }
