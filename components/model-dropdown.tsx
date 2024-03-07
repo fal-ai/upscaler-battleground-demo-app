@@ -29,7 +29,7 @@ export const UPSCALE_MODELS: Model[] = [
     shortname: "ESRGAN",
     name: "ESRGAN Upscaler",
     model: "fal-ai/esrgan",
-    link: "https://fal.run/fal-ai/esrgan",
+    link: "https://fal.ai/models/esrgan",
   },
   {
     shortname: "SUPIR",
