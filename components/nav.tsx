@@ -27,7 +27,7 @@ export function Nav() {
       <div className="flex flex-none items-center space-x-4">
         <ThemeToggle />
         <Link
-          href="https://github.com/fal-ai/sdxl-lightning-demo-app"
+          href="https://github.com/fal-ai/upscaler-battleground-demo-app"
           className="flex flex-row space-x-2 items-center"
           target="_blank"
         >

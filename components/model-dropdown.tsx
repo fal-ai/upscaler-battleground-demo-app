@@ -30,7 +30,7 @@ export const UPSCALE_MODELS: Model[] = [
     shortname: "ESRGANx4P",
     name: "ESRGAN x4 Plus",
     model: "fal-ai/esrgan",
-    link: "https://fal.run/fal-ai/esrgan",
+    link: "https://fal.ai/models/esrgan",
     meta: {
       model: "RealESRGAN_x4plus",
     },
@@ -39,7 +39,7 @@ export const UPSCALE_MODELS: Model[] = [
     shortname: "ESRGANx2P",
     name: "ESRGAN x2 Plus",
     model: "fal-ai/esrgan",
-    link: "https://fal.run/fal-ai/esrgan",
+    link: "https://fal.ai/models/esrgan",
     meta: {
       model: "RealESRGAN_x2plus",
     },
@@ -48,7 +48,7 @@ export const UPSCALE_MODELS: Model[] = [
     shortname: "ESRGANx4PA6B",
     name: "ESRGAN x4 Plus Anime 6B",
     model: "fal-ai/esrgan",
-    link: "https://fal.run/fal-ai/esrgan",
+    link: "https://fal.ai/models/esrgan",
     meta: {
       model: "RealESRGAN_x4plus_anime_6B",
     },
@@ -57,7 +57,7 @@ export const UPSCALE_MODELS: Model[] = [
     shortname: "ESRGANx4v3",
     name: "ESRGAN x4 v3",
     model: "fal-ai/esrgan",
-    link: "https://fal.run/fal-ai/esrgan",
+    link: "https://fal.ai/models/esrgan",
     meta: {
       model: "RealESRGAN_x4_v3",
     },
@@ -66,7 +66,7 @@ export const UPSCALE_MODELS: Model[] = [
     shortname: "ESRGANx4WdnV3",
     name: "ESRGAN x4 Wdn v3",
     model: "fal-ai/esrgan",
-    link: "https://fal.run/fal-ai/esrgan",
+    link: "https://fal.ai/models/esrgan",
     meta: {
       model: "RealESRGAN_x4_wdn_v3",
     },
@@ -75,7 +75,7 @@ export const UPSCALE_MODELS: Model[] = [
     shortname: "ESRGANx4Av3",
     name: "ESRGAN x4 Anime v3",
     model: "fal-ai/esrgan",
-    link: "https://fal.run/fal-ai/esrgan",
+    link: "https://fal.ai/models/esrgan",
     meta: {
       model: "RealESRGAN_x4_anime_v3",
     },

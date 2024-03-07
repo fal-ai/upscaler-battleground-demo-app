@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: "A demo comparing different upscalers served by fal.ai",
   authors: [{ name: "fal.ai", url: "https://fal.ai" }],
   // [TODO]: Update this to the correct URL
-  metadataBase: new URL("https://fastsdxl.ai"),
+  metadataBase: new URL("https://upscaler.party"),
   openGraph: {
     images: "/og_thumbnail.jpeg",
   },
