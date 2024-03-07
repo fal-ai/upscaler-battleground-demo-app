@@ -17,7 +17,8 @@ import {
 } from "@/components/model-dropdown";
 import { Button } from "@/components/ui/button";
 import { LoaderIcon } from "lucide-react";
-import { resizeImage } from "@/lib/image";
+import { resizeAndNoiseImage } from "@/lib/image";
+import Switch from "@/components/ui/switch";
 
 fal.config({ proxyUrl: "/api/proxy" });
 
@@ -29,11 +30,16 @@ interface ModelResult {
 
 type CompareMode = "original" | "model";
 
+const NOISE_LEVEL = 0.2;
+const MAX_IMAGE_SIZE = 512;
+
 export default function UpscalerBattleground() {
   const [mode, setMode] = useState<CompareMode>("original");
   const [position, setPosition] = useState<number>(50);
   const [originalImage, setOriginalImage] = useState<string | null>(null);
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [rawImageFile, setRawImageFile] = useState<File | Blob | null>(null);
+  const [imageFile, setImageFile] = useState<File | Blob | null>(null);
+  const [noise, setNoise] = useState<boolean>(true);
 
   const [firstModelLoading, setFirstModelLoading] = useState<boolean>(false);
   const [secondModelLoading, setSecondModelLoading] = useState<boolean>(false);
@@ -54,10 +60,9 @@ export default function UpscalerBattleground() {
 
     let inferenceTime;
 
-    const resizedImage = await resizeImage(file);
     const result: Record<string, any> = await fal.subscribe(firstModel.model, {
       input: {
-        image_url: resizedImage,
+        image_url: file,
         ...(firstModel.meta || {}),
       },
       logs: true,
@@ -86,10 +91,9 @@ export default function UpscalerBattleground() {
 
     let inferenceTime;
 
-    const resizedImage = await resizeImage(file);
     const result: Record<string, any> = await fal.subscribe(secondModel.model, {
       input: {
-        image_url: resizedImage,
+        image_url: file,
         ...(secondModel.meta || {}),
       },
       logs: true,
@@ -111,8 +115,34 @@ export default function UpscalerBattleground() {
     setSecondModelLoading(false);
   };
 
-  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const image = e.target?.files?.[0];
+  const handleNoise = async (checked) => {
+    const noise = checked;
+    setNoise(noise);
+    if (!rawImageFile) return;
+
+    const newImage = await resizeAndNoiseImage(
+      rawImageFile as File,
+      MAX_IMAGE_SIZE,
+      noise ? NOISE_LEVEL : 0
+    );
+
+    const blobUrl = URL.createObjectURL(newImage);
+    setImageFile(newImage);
+    setOriginalImage(blobUrl);
+  };
+
+  const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    let image: File | Blob | undefined = e.target?.files?.[0];
+
+    setRawImageFile(image || null);
+
+    if (image) {
+      image = await resizeAndNoiseImage(
+        image as File,
+        MAX_IMAGE_SIZE,
+        noise ? NOISE_LEVEL : 0
+      );
+    }
 
     setFirstModelOutput(null);
     setSecondModelOutput(null);
@@ -174,6 +204,24 @@ export default function UpscalerBattleground() {
                     </span>
                   </div>
                 </div>
+                <div className="h-10 flex items-center justify-center">
+                  <label
+                    htmlFor="noise"
+                    className="h-6 relative text-neutral-500 dark:text-neutral-400 uppercase text-xs flex items-center"
+                  >
+                    Noise:
+                    <Switch
+                      disabled={firstModelLoading || secondModelLoading}
+                      defaultChecked={noise}
+                      className={cn(
+                        "ml-1",
+                        firstModelLoading && "cursor-not-allowed"
+                      )}
+                      id="noise"
+                      onCheckedChange={handleNoise}
+                    />
+                  </label>
+                </div>
                 <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 text-sm items-center justify-center">
                   <label className="text-neutral-500 md:mr-1 dark:text-neutral-400 uppercase text-xs">
                     Image:
@@ -190,6 +238,7 @@ export default function UpscalerBattleground() {
                   />
                 </div>
               </div>
+
               <Button
                 size="lg"
                 className="mx-auto md:mx-0"
