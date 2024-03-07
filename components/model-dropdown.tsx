@@ -27,7 +27,7 @@ export const UPSCALE_MODELS: Model[] = [
     link: "https://fal.ai/models/ccsr",
   },
   {
-    shortname: "ESRGANx4P",
+    shortname: "ESRGAN",
     name: "ESRGAN x4 Plus",
     model: "fal-ai/esrgan",
     link: "https://fal.ai/models/esrgan",
@@ -36,7 +36,7 @@ export const UPSCALE_MODELS: Model[] = [
     },
   },
   {
-    shortname: "ESRGANx2P",
+    shortname: "ESRGAN",
     name: "ESRGAN x2 Plus",
     model: "fal-ai/esrgan",
     link: "https://fal.ai/models/esrgan",
@@ -45,7 +45,7 @@ export const UPSCALE_MODELS: Model[] = [
     },
   },
   {
-    shortname: "ESRGANx4PA6B",
+    shortname: "ESRGAN",
     name: "ESRGAN x4 Plus Anime 6B",
     model: "fal-ai/esrgan",
     link: "https://fal.ai/models/esrgan",
@@ -54,7 +54,7 @@ export const UPSCALE_MODELS: Model[] = [
     },
   },
   {
-    shortname: "ESRGANx4v3",
+    shortname: "ESRGAN",
     name: "ESRGAN x4 v3",
     model: "fal-ai/esrgan",
     link: "https://fal.ai/models/esrgan",
@@ -63,7 +63,7 @@ export const UPSCALE_MODELS: Model[] = [
     },
   },
   {
-    shortname: "ESRGANx4WdnV3",
+    shortname: "ESRGAN",
     name: "ESRGAN x4 Wdn v3",
     model: "fal-ai/esrgan",
     link: "https://fal.ai/models/esrgan",
@@ -72,7 +72,7 @@ export const UPSCALE_MODELS: Model[] = [
     },
   },
   {
-    shortname: "ESRGANx4Av3",
+    shortname: "ESRGAN",
     name: "ESRGAN x4 Anime v3",
     model: "fal-ai/esrgan",
     link: "https://fal.ai/models/esrgan",
@@ -115,7 +115,7 @@ export function ModelDropdown({
         {UPSCALE_MODELS.map((model) => (
           <DropdownMenuItem
             key={model.name}
-            disabled={disableList.includes(model.shortname)}
+            disabled={disableList.includes(model.name)}
             onClick={() => onSelect(model)}
           >
             {model.name}

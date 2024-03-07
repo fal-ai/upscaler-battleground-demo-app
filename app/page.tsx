@@ -206,7 +206,7 @@ export default function UpscalerBattleground() {
           <div className="flex w-full items-end justify-between border-y py-2 mb-3">
             <div className="w-1/2 flex justify-start">
               <ModelDropdown
-                disableList={[secondModel?.shortname]}
+                disableList={[secondModel?.name]}
                 onSelect={(model) => setFirstModel(model)}
                 value={firstModel}
               />
@@ -214,7 +214,7 @@ export default function UpscalerBattleground() {
 
             <div className="w-1/2 flex justify-end">
               <ModelDropdown
-                disableList={[firstModel?.shortname]}
+                disableList={[firstModel?.name]}
                 onSelect={(model) => setSecondModel(model)}
                 value={secondModel}
               />
