@@ -16,6 +16,7 @@ export interface Model {
   name: string;
   model: string;
   link: string;
+  meta?: Record<string, any>;
 }
 
 export const UPSCALE_MODELS: Model[] = [
@@ -27,9 +28,57 @@ export const UPSCALE_MODELS: Model[] = [
   },
   {
     shortname: "ESRGAN",
-    name: "ESRGAN Upscaler",
+    name: "ESRGAN x4 Plus",
     model: "fal-ai/esrgan",
     link: "https://fal.ai/models/esrgan",
+    meta: {
+      model: "RealESRGAN_x4plus",
+    },
+  },
+  {
+    shortname: "ESRGAN",
+    name: "ESRGAN x2 Plus",
+    model: "fal-ai/esrgan",
+    link: "https://fal.ai/models/esrgan",
+    meta: {
+      model: "RealESRGAN_x2plus",
+    },
+  },
+  {
+    shortname: "ESRGAN",
+    name: "ESRGAN x4 Plus Anime 6B",
+    model: "fal-ai/esrgan",
+    link: "https://fal.ai/models/esrgan",
+    meta: {
+      model: "RealESRGAN_x4plus_anime_6B",
+    },
+  },
+  {
+    shortname: "ESRGAN",
+    name: "ESRGAN x4 v3",
+    model: "fal-ai/esrgan",
+    link: "https://fal.ai/models/esrgan",
+    meta: {
+      model: "RealESRGAN_x4_v3",
+    },
+  },
+  {
+    shortname: "ESRGAN",
+    name: "ESRGAN x4 Wdn v3",
+    model: "fal-ai/esrgan",
+    link: "https://fal.ai/models/esrgan",
+    meta: {
+      model: "RealESRGAN_x4_wdn_v3",
+    },
+  },
+  {
+    shortname: "ESRGAN",
+    name: "ESRGAN x4 Anime v3",
+    model: "fal-ai/esrgan",
+    link: "https://fal.ai/models/esrgan",
+    meta: {
+      model: "RealESRGAN_x4_anime_v3",
+    },
   },
   {
     shortname: "SUPIR",
@@ -66,7 +115,7 @@ export function ModelDropdown({
         {UPSCALE_MODELS.map((model) => (
           <DropdownMenuItem
             key={model.name}
-            disabled={disableList.includes(model.model)}
+            disabled={disableList.includes(model.name)}
             onClick={() => onSelect(model)}
           >
             {model.name}

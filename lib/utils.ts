@@ -6,6 +6,6 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatTime(ms: number) {
-  if (ms < 1000) return `${ms}ms`;
+  if (ms < 1000) return `${Math.floor(ms)}ms`;
   return `${(ms / 1000).toFixed(1)}s`;
 }
